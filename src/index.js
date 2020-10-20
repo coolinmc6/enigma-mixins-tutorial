@@ -2,23 +2,16 @@ import React from 'react';
 import { render } from 'react-dom';
 import './css/styles.scss';
 
-import MyChart from './MyChart';
+import appPromise from './config/app';
 
 const App = () => {
   (async () => {
-    const apple = new Promise((res) => {
-      setTimeout(() => {
-        res('apple');
-      }, 3000)
-    })
-
-    const _apple = await apple;
-    console.log(_apple);
+    const app = await appPromise;
+    console.log(app);
   })()
   return (
     <div>
-      <h1>Qdt-Components 3.0 Tutorial</h1>
-      <MyChart />
+      <h1>Enigma.js Mixins Tutorial</h1>
     </div>
   )
 }

@@ -1,4 +1,6 @@
-import { qdtEnigma } from 'qdt-components';
+import enigma from 'enigma.js';
+const schema = require('enigma.js/schemas/12.170.2.json');
+const SenseUtilities = require('enigma.js/sense-utilities');
 
 const config = {
   host: 'sense-demo.qlik.com',
@@ -8,8 +10,8 @@ const config = {
   appId: '372cbc85-f7fb-4db6-a620-9a5367845dce', // Consumer Sales
 };
 
-const appPromise = qdtEnigma(config);
+const url = SenseUtilities.buildUrl(config);
 
-appPromise.then((app) => { app.clearAll(); });
-
-export default appPromise;
+export default enigma.create({ 
+  schema, url, mixins: []
+}).open().then(global => global.openDoc(config.appId));
