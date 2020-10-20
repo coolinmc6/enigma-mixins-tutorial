@@ -2,8 +2,8 @@
 
 Getting started:
 ```sh
-git clone https://github.com/coolinmc6/qdt-mui-template.git my-app
-cd my-app
+git clone https://github.com/coolinmc6/enigma-mixins-tutorial.git
+cd enigma-mixins-tutorial
 npm i
 npm run dev
 ```
