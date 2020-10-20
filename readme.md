@@ -1,4 +1,4 @@
-# Qdt-Components and Material UI Starter
+# Mixins in Enigma.js
 
 Getting started:
 ```sh
