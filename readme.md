@@ -52,13 +52,15 @@ export default enigma.create({
 }).open().then(global => global.openDoc(config.appId));
 ```
 
-Now, in your index.js file, simply call your mixin by doing: `app.myMixin()`. If you check your console, you'll same the console.log message we entered; you've just completed your first mixin!
+Now, in your index.js file, simply call your mixin by doing: `app.myMixin()`. If you check your console, you'll see the console.log message we entered; you've just completed your first mixin!
+
+I want to quickly summarize the mixin object before we move on (here are the [docs](https://github.com/qlik-oss/enigma.js/blob/master/docs/api.md#mixins)). Mixin objects should have a types property to indicate which Qlik Objects (e.g. Doc, GenericObject, GenericBookmark, etc.) you are modifying. For this first mixin, we'll be modifying the Doc class. Next is the `init(args)` method which runs some code when you initialize your mixin. Lastly there are two properties: "extend" and "override". As their names suggest, "extend" will add methods to the Qlik Object while "override" will overwrite the existing Qlik Object methods. This tutorial will mainly focus on extending the functionality of Qlik Objects.
 
 ## Using Qlik Objects in Mixins
 
-Now that we've created our first mixin with a single method that extends our doc object, let's step it up and write a method to get hypercube data. The point of this method is to do all that Qlik JSON API stuff for us.
+Now that we've created our first mixin with a single method that extends our Doc object, let's step it up and write a method to get hypercube data. The point of this method is to do all that Qlik QIX Engine stuff for us.
 
-We know that we want this method to be on the doc class so in our code, we can write the method below our `myMixin()` code like so:
+We know that we want this method to be on the Doc class so in our code, we can just write the method below our `myMixin()` code like so:
 
 ```js
 // mixins.js
@@ -87,7 +89,7 @@ export {
   docMixin,
 };
 ```
-In our index.js file, we'll call the method and provide a hypercube. We've used this hypercube before on this blog and simply shows the sales margin by product category from our Consumer Sales app. Copy the hypercube and code below to call the method:
+In our index.js file, we'll call the method and provide a hypercube. We've used this hypercube before on this blog (it simply shows the sales margin by product category from our Consumer Sales app). Copy the hypercube and code below to call the method:
 
 ```js
 // index.js
@@ -119,7 +121,7 @@ const hypercube = {
   console.log(data)
 })()
 ```
-In the console, you'll notice two more logs there. The first is the session object that you're all too familiar with. The second is the data that we've requested in a JavaScript array. It's still in the Qlik formatting and may require more clean-up if you wanted to look at just the data but notice how easy it now request data for any hypercubes that you may write. We can now avoid having to write all that code over and over and just use our new `mGetData` method.
+In the console, you'll notice two more logs there. The first is the session object that we just created (and that you're probably all too familiar with). The second is the data that we've requested in a JavaScript array. It's still in the Qlik formatting and may require more clean-up if you wanted to look at just the data but notice how easy it now is to request data for any hypercubes that you may write. We can now avoid having to write all that code over and over and just use our new `mGetData()` method.
 
 ## Using Other Mixin Methods
 
