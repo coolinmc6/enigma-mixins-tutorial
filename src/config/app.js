@@ -1,7 +1,7 @@
 import enigma from 'enigma.js';
 const schema = require('enigma.js/schemas/12.170.2.json');
 const SenseUtilities = require('enigma.js/sense-utilities');
-import { docMixin } from './mixins';
+import { docMixin, objectMixin } from './mixins';
 
 const config = {
   host: 'sense-demo.qlik.com',
@@ -14,5 +14,5 @@ const config = {
 const url = SenseUtilities.buildUrl(config);
 
 export default enigma.create({ 
-  schema, url, mixins: [docMixin]
+  schema, url, mixins: [docMixin, objectMixin]
 }).open().then(global => global.openDoc(config.appId));

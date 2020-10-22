@@ -36,6 +36,19 @@ const docMixin = {
   }
 }
 
+const objectMixin = {
+  types: ['GenericObject'],
+  init(args) {},
+  extend: {
+    objectMixin(msg) {
+      console.log('layout mixin', msg)
+      this.getLayout().then((layout) => {
+        console.log("Layout: ", layout)
+      })
+    }
+  },
+}
+
 export {
-  docMixin,
+  docMixin, objectMixin
 };

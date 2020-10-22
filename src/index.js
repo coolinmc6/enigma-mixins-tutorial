@@ -38,6 +38,13 @@ const App = () => {
     // Method #3: Complex #2
     const table = await app.mPrintTable({ object: hypercube })
     console.log(table);
+
+    // Method #4: Object Mixin #1
+    app.createSessionObject(hypercube).then((obj) => {
+      console.log(obj)
+      obj.objectMixin('hey there')
+      obj.myMixin()
+    })
   })()
   return (
     <div>
