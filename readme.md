@@ -14,7 +14,7 @@ npm run dev
 
 We've discussed Engima.js on this blog before https://community.qlik.com/t5/Labels-page/bd-p/Category_Labels?categoryId=qlik-design-blog&corenode=boards&labelText=enigma.js&nodetype=boards but it is usually within the context of building a mashup (Enigma is also the library that the Qlik Demo Team uses for https://github.com/qlik-demo-team/qdt-components). https://github.com/qlik-oss/enigma.js/ is a library that helps you communicate with the Qlik QIX Engine. One cool feature about Enigma.js is that it allows you to write your own mixins to extend or override the methods on the Qlik objects that you use all the time. This post will teach you the basics of mixins and show you how to implement your own.
 
-Your First Mixin
+## Your First Mixin
 
 Here is the finished repo if you want to see the final product [https://github.com/coolinmc6/enigma-mixins-tutorial](https://github.com/coolinmc6/enigma-mixins-tutorial). If you want to follow along, clone the repo and checkout the "start" branch `git checkout -b start` to follow along from the beginning.
 
@@ -54,7 +54,7 @@ export default enigma.create({
 
 Now, in your index.js file, simply call your mixin by doing: `app.myMixin()`. If you check your console, you'll same the console.log message we entered; you've just completed your first mixin!
 
-Using Qlik Objects in Mixins
+## Using Qlik Objects in Mixins
 
 Now that we've created our first mixin with a single method that extends our doc object, let's step it up and write a method to get hypercube data. The point of this method is to do all that Qlik JSON API stuff for us.
 
@@ -121,7 +121,7 @@ const hypercube = {
 ```
 In the console, you'll notice two more logs there. The first is the session object that you're all too familiar with. The second is the data that we've requested in a JavaScript array. It's still in the Qlik formatting and may require more clean-up if you wanted to look at just the data but notice how easy it now request data for any hypercubes that you may write. We can now avoid having to write all that code over and over and just use our new `mGetData` method.
 
-Using Other Mixin Methods
+## Using Other Mixin Methods
 
 Another cool feature of these methods is that we can use other methods that we've written. For this method, we're going to use our `mGetData` method to just log a table of the data in the console.
 
@@ -160,7 +160,7 @@ Now take a look at your console. You'll see that we a table printed!
 
 To quickly summarize what's going on here, we now have three methods on the doc class: myMixin, mGetData, and mPrintTable. We can call ALL of them within each other using the "this" object because it is the "doc" object; they are the same. In the next section, we are going to create a separate mixin for just Generic Objects so you can see the difference.
 
-Generic Object Mixin
+## Generic Object Mixin
 
 First, add the code below to our mixins file:
 
@@ -209,7 +209,7 @@ app.createSessionObject(hypercube).then((obj) => {
 ```
 As you can see here, we used our doc object to call `createSessionObject()` to manually create an instance of the Generic Object class. You'll see in the console that there are a few more logs. First, you'll see the Generic Object that you've probably seen many times. Next, you'll see the message "layout mixin hey there" from our `objectMixin()` method. You'll also see the layout object we've called in our `objectMixin()` method. Last, and this was just to illustrate the point, when we called `myMixin()` on our Generic Object, it didn't work - we got an error. This happens because the `myMixin()` method is ONLY on the doc class. Just like `objectMixin()` is ONLY on the Generic Object class. Keep this in mind when you are writing your own methods as you'll most likely need different behaviors for the Doc vs. Generic Objects.
 
-Additional Mixins for Same Type
+## Additional Mixins for Same Type
 
 Now let's create a second Generic Object mixin.
 
@@ -248,7 +248,7 @@ app.createSessionObject(hypercube).then((obj) => {
 ```
 And there we go. We've just created a second mixin for our Generic Object class. Now why is this important: first, it allows you to organize your code into groups that make sense to you and not feel constrained by keeping the "types" together. You may have methods that you want available across ALL types and then methods for only one class. In this case, you'd need separate mixins. One important caveat to remember is that you cannot have name clashes. So if we called our method "objectMixin()` inside our objectMixin2, we'd get an error because the method name clashes with the method from our first object mixin.
 
-Bring it All Together
+## Bring it All Together
 
 The last little bit of code we'll write reinforces what we did above with with the `mPrintTable` method. But instead of doing two Doc class methods, we'll call our new `objectMixin()` method within our `mGetData()` method. Here we go:
 
@@ -269,7 +269,7 @@ mGetData({ object }) {
 ```
 Now take a look in your console (clean-up or comment out some of our older code if you have trouble seeing the log). You'll see the "from inside mGetData" message. This is the power of mixins. You simply pick the Qlik Object type you'd like to modify or extend (Doc, Generic Object, etc.) and write your code. Now you can call your custom method directly on those objects as if they were native to that object. It gives developers a great deal of flexibility and the ability to write code that can be used in multiple projects.
 
-Conclusion
+## Conclusion
 
 Let's wrap things up by reviewing what we did here in this blog:
 
