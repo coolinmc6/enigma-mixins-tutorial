@@ -7,7 +7,7 @@ import appPromise from './config/app';
 const App = () => {
   (async () => {
     const app = await appPromise;
-    console.log(app);
+    app.myMixin()
   })()
   return (
     <div>
