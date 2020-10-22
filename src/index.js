@@ -27,9 +27,17 @@ const hypercube = {
 const App = () => {
   (async () => {
     const app = await appPromise;
+
+    // Method #1: Basic
     app.myMixin()
+
+    // Method #2: Complex #1
     const data = await app.mGetData({ object: hypercube })
     console.log(data)
+
+    // Method #3: Complex #2
+    const table = await app.mPrintTable({ object: hypercube })
+    console.log(table);
   })()
   return (
     <div>

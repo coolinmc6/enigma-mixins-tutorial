@@ -16,6 +16,23 @@ const docMixin = {
         })
       })
     },
+    mPrintTable({ object }) {
+      return new Promise((res) => {
+        this.mGetData({ object }).then((qObj) => {
+          const table = []
+          qObj[0].qMatrix.map((o) => {
+            const row = {}
+            o.map((c,i) => {
+              let val = c.qNum === "NaN" ? c.qText : c.qNum
+              row[`c${i}`] = val;
+            })
+            table.push(row);
+          })
+          console.table(table);
+          res(table);
+        })
+      })
+    },
   }
 }
 
