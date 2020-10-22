@@ -9,6 +9,7 @@ const docMixin = {
       return new Promise((res) => {
         this.createSessionObject(object).then((obj) => {
           console.log(obj)
+          obj.objectMixin('from inside mGetData')
           obj.getLayout().then((layout) => {
             const data = layout.qHyperCube.qDataPages;
             res(data);
@@ -49,6 +50,19 @@ const objectMixin = {
   },
 }
 
+const objectMixin2 = {
+  types: ['GenericObject'],
+  init(args) {},
+  extend: {
+    objectMixin2() {
+      console.log('layout mixin #2')
+      this.getLayout().then((layout) => {
+        console.log("Layout #2: ", layout)
+      })
+    }
+  },
+}
+
 export {
-  docMixin, objectMixin
+  docMixin, objectMixin, objectMixin2
 };
