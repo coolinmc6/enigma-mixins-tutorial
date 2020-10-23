@@ -125,9 +125,9 @@ In the console, you'll notice two more logs there. The first is the session obje
 
 ## Using Other Mixin Methods
 
-Another cool feature of these methods is that we can use other methods that we've written. For this method, we're going to use our `mGetData` method to just log a table of the data in the console.
+Another cool feature of these methods is that we can use other methods that we've written. For this method, we're going to use our `mGetData()` method to just log a table of the data in the console.
 
-Let's add the code to our mixins file right below `mGetData`:
+Let's add the code to our mixins file right below `mGetData()`:
 
 ```js
 // CODE
@@ -158,9 +158,9 @@ console.log(table);
 
 // CODE
 ```
-Now take a look at your console. You'll see that we a table printed!
+Now take a look at your console. You'll see that we have printed a table!
 
-To quickly summarize what's going on here, we now have three methods on the doc class: myMixin, mGetData, and mPrintTable. We can call ALL of them within each other using the "this" object because it is the "doc" object; they are the same. In the next section, we are going to create a separate mixin for just Generic Objects so you can see the difference.
+To quickly summarize what's going on here, we now have three methods on the doc class: `myMixin()`, `mGetData()`, and `mPrintTable()`. We can call ALL of them within each other using the "this" object because it is the "doc" object; they are the same. All of these methods have extended the functionality of the Doc class so ALL of them are available whenever you use `app` or, within these methods, the `this` object. In the next section, we are going to create a separate mixin for just Generic Objects so you can see this concept in action.
 
 ## Generic Object Mixin
 
@@ -188,7 +188,7 @@ export {
   docMixin, objectMixin
 };
 ```
-Notice that the the "types" property says "GenericObject" and "Doc". This method will ONLY be available for Generic Objects. Don't forget to export our objectMixin:
+Notice that the the "types" property says "GenericObject" and NOT "Doc". This method will ONLY be available for Generic Objects. (Don't forget to export our objectMixin at the bottom of the mixins.js file).
 
 ```js
 // app.js
@@ -209,7 +209,7 @@ app.createSessionObject(hypercube).then((obj) => {
   obj.myMixin()
 })
 ```
-As you can see here, we used our doc object to call `createSessionObject()` to manually create an instance of the Generic Object class. You'll see in the console that there are a few more logs. First, you'll see the Generic Object that you've probably seen many times. Next, you'll see the message "layout mixin hey there" from our `objectMixin()` method. You'll also see the layout object we've called in our `objectMixin()` method. Last, and this was just to illustrate the point, when we called `myMixin()` on our Generic Object, it didn't work - we got an error. This happens because the `myMixin()` method is ONLY on the doc class. Just like `objectMixin()` is ONLY on the Generic Object class. Keep this in mind when you are writing your own methods as you'll most likely need different behaviors for the Doc vs. Generic Objects.
+As you can see here, we used our Doc object to call `createSessionObject()` to manually create an instance of the Generic Object class. You'll see in the console that there are a few more logs. First, you'll see the Generic Object that you've probably seen many times. Next, you'll see the message "layout mixin hey there" from our `objectMixin()` method as well as the layout object. Last, and this was just to illustrate the point, when we called `myMixin()` on our Generic Object, it didn't work - we got an error. This happens because the `myMixin()` method is ONLY on the Doc class. Just like `objectMixin()` is ONLY on the Generic Object class. Keep this in mind when you are writing your own methods as you'll most likely need different behaviors for the different Qlik Objects.
 
 ## Additional Mixins for Same Type
 
@@ -248,11 +248,11 @@ app.createSessionObject(hypercube).then((obj) => {
   obj.objectMixin2('hey there')
 })
 ```
-And there we go. We've just created a second mixin for our Generic Object class. Now why is this important: first, it allows you to organize your code into groups that make sense to you and not feel constrained by keeping the "types" together. You may have methods that you want available across ALL types and then methods for only one class. In this case, you'd need separate mixins. One important caveat to remember is that you cannot have name clashes. So if we called our method "objectMixin()` inside our objectMixin2, we'd get an error because the method name clashes with the method from our first object mixin.
+And there we go. We've just created a second mixin for our Generic Object class. Now why is this important? It allows you to organize your code into blocks that make sense to YOU and not feel constrained by keeping the "types" together. You may have methods that you want available across ALL types and then methods for only one class. In that case, you'd need separate mixins. One important caveat to remember is that you cannot have name clashes within the same type. So if we called our method "objectMixin()` inside our second object mixin, we'd get an error because the method name clashes with the method name from our first object mixin.
 
 ## Bring it All Together
 
-The last little bit of code we'll write reinforces what we did above with with the `mPrintTable` method. But instead of doing two Doc class methods, we'll call our new `objectMixin()` method within our `mGetData()` method. Here we go:
+The last little bit of code we'll write reinforces what we did above with with the `mPrintTable()` method. But instead of doing two Doc class methods, we'll call our new `objectMixin()` method within our `mGetData()` method. Here we go:
 
 ```js
 // mixins.js
